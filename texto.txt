@@ -1,0 +1,111 @@
+/**
+ * Define a grammar called Hello
+ /
+grammar Simple;
+
+declaracion_de_variables:bigrancio;
+
+modificacion_de_variables:bigrancio;
+
+operaciones_en_variables:bigrancio;
+
+declaracion_de_constantes:bigrancio;
+
+condiciones:bigrancio;
+
+ciclo_while:bigrancio;
+
+ciclo_for:bigrancio;
+
+operaciones_especiales:bigrancio;
+
+
+bigrancio: BIGRANCIO ID BR_OP 
+            sent
+            BR_CL;
+
+BIGRANCIO: 'bigrancio.';
+
+sent:  variable_val | variable_op | print | ciclos |variables_de|iff|constantes;
+
+constantes: CONST (INT | STRING | BOOLEAN) ID EQ (NUMERO | TEXT | BOO) PC;
+
+variables_de:(VAR) (INT | STRING | BOOLEAN) (ID PC);
+
+variable_val:ID EQ (NUMERO | TEXT | BOO) PC;
+
+variable_op:ID EQ (operaciones) PC;
+
+operaciones:num_op | text_op | boo_op | ILN POP PCL | cos | sin | raiz | pow;
+
+cos:'cos(' (ID | NUMERO) PCL;
+
+sin: 'sin(' (ID | NUMERO) PCL;
+
+raiz: 'raiz(' (ID | NUMERO) PCL;
+
+pow: 'pow(' (ID | NUMERO) PDOS (ID | NUMERO) PCL;
+
+num_op: (NUMERO | ID) ('+' | '-' | '' | '/') (NUMERO | ID);
+
+text_op: (TEXT | ID) '+' (TEXT | ID) ;
+
+boo_op: (BOO | ID) ('&&' | '||') (BOO | ID);
+
+print: 'pln(' (num_op | text_op | boo_op | ID | TEXT | op_especiales) PCL PC;
+
+ciclos:whilee | forr;
+
+whilee:'while' POP (ID | TEXT) LOGIC (ID | TEXT) PCL BR_OP sent BR_CL;
+
+iff:'if' POP (ID | TEXT) LOGIC (ID | TEXT) PCL BR_OP sent* BR_CL;
+
+forr:CIFOR POP (ID|NUMERO) PDOS (ID|NUMERO)',' ID PCL BR_OP sent* BR_CL;
+
+op_especiales:cos|sin|raiz|pow;
+
+
+
+PDOS:':';
+
+CIFOR:'for';
+
+ILN:'iln';
+
+POP:'(';
+
+PCL:')';
+
+LOGIC:'=='|'!='|'<'|'>'|'<='|'>=';
+
+BOO:'true'|'false';
+
+CONST:'const';
+
+INT:'int';
+
+STRING:'String';
+
+BOOLEAN:'boolean';
+
+VAR:'var';
+
+EQ:'=';
+
+CM:'"';
+
+BR_OP:'{';
+
+BR_CL:'}';
+
+PC: ';';
+
+NUMERO : [0-9];
+
+ID : [a-zA-Z0-9][a-zA-Z0-9]* ;             // match lower-case identifiers
+
+ TEXT: '"' [a-zA-Z0-9 ][a-zA-Z0-9 ]* '"';
+
+
+
+WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
