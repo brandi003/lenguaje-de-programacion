@@ -52,7 +52,8 @@ text_op: (TEXT | ID) '+' (TEXT | ID) ;
 
 boo_op: (BOO | ID) ('&&' | '||') (BOO | ID);
 
-print: 'pln(' (num_op | text_op | boo_op | ID | TEXT | op_especiales) PCL PC;
+print: 'pln(' (num_op | text_op | boo_op | ID | TEXT | op_especiales) PCL PC
+	{System.ou.println("estamos imprimiendo algo")};
 
 ciclos:whilee | forr;
 
@@ -108,4 +109,4 @@ ID : [a-zA-Z0-9][a-zA-Z0-9]* ;             // match lower-case identifiers
 
 
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+WS : [ \t\r\n]+ -> skip ;
